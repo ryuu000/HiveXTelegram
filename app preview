@@ -1,0 +1,71 @@
+// src/CryptoMiningBot.js
+import React, { useState } from 'react';
+import './App.css'; // Make sure to import the CSS file
+
+const CryptoMiningBot = () => {
+  const [cryptoMined, setCryptoMined] = useState(0);
+  const [isMining, setIsMining] = useState(false);
+  let interval;
+
+  const startMining = () => {
+    setIsMining(true);
+    interval = setInterval(() => {
+      const newCrypto = Math.floor(Math.random() * 10) + 1;
+      setCryptoMined(prevCrypto => prevCrypto + newCrypto);
+    }, 1000);
+  };
+
+  const stopMining = () => {
+    clearInterval(interval);
+    setIsMining(false);
+  };
+
+  return (
+    <div>
+      <h1>Crypto Mining Bot</h1>
+      <p>Crypto Mined: {cryptoMined}</p>
+      <div className="wheel"></div>
+      <button onClick={startMining} disabled={isMining}>
+        Start Mining
+      </button>
+      <button onClick={stopMining} disabled={!isMining}>
+        Stop Mining
+      </button>
+    </div>
+  );
+};
+
+export default CryptoMiningBot;
+
+// src/App.js
+import React from 'react';
+import CryptoMiningBot from './CryptoMiningBot';
+
+function App() {
+  return (
+    <div className="App">
+      <CryptoMiningBot />
+    </div>
+  );
+}
+
+export default App;
+
+// src/App.css
+.wheel {
+  width: 100px;
+  height: 100px;
+  border: 10px solid #000;
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 5s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
